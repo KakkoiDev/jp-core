@@ -84,6 +84,26 @@ def parse(text: str) -> list[Token]:
     return tokens
 
 
+def normalize(text: str) -> str:
+    """Keep valid kanji readings and remove redundant kana annotations.
+
+    Model output sometimes contains ``テスト【てすと】`` even though kana does
+    not need furigana.  Such annotations are not part of the canonical format
+    and would otherwise leak literal brackets from strict ruby renderers.
+
+    >>> normalize("これはテスト【てすと】です。日本【にほん】です。")
+    'これはテストです。日本【にほん】です。'
+    """
+    if not text:
+        return ""
+    return "".join(
+        token.base + (f"【{token.reading}】" if token.annotated else "")
+        if token.annotated
+        else _BRACKET_RE.sub("", token.base)
+        for token in parse(text)
+    )
+
+
 def to_ruby(text: str) -> str:
     """Render as ruby HTML for an Anki card.
 

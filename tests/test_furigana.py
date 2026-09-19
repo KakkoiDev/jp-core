@@ -117,6 +117,12 @@ def test_repetition_mark_takes_ruby():
     assert furigana.to_ruby("徐々【じょじょ】") == "<ruby>徐々<rt>じょじょ</rt></ruby>"
 
 
+def test_normalize_removes_redundant_kana_annotation():
+    text = "これはテスト【てすと】です、うまくいっています。日本【にほん】です。"
+    assert furigana.normalize(text) == "これはテストです、うまくいっています。日本【にほん】です。"
+    assert furigana.normalize("これ【これ】はテスト【てすと】です") == "これはテストです"
+
+
 def test_only_the_kanji_run_takes_ruby():
     """Kana preceding a kanji run stays outside the <ruby> element."""
     assert furigana.to_ruby("ぶどう酒【ぶどうしゅ】") == "ぶどう<ruby>酒<rt>ぶどうしゅ</rt></ruby>"
