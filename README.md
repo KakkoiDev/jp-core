@@ -1,5 +1,31 @@
 # JP Core
 
+JP Core is the canonical library for Japanese content and Japanese-specific
+tooling across KakkoiDev projects. It deliberately does not own authentication,
+general chat state, provider billing, or application navigation.
+
+## Shared APIs
+
+| API | Owns |
+| --- | --- |
+| jp_core.text | Unicode normalization, Japanese script detection, sentence splitting |
+| jp_core.furigana / reading | Canonical annotations, renderers, deterministic reading generation |
+| jp_core.corpus | Sentences, provenance, stable IDs, queries, and teaching collections |
+| jp_core.speech | TTS/STT contracts, requests, transcripts, comparison, provider registry |
+| jp_core.anki | Stable deck, note, media, ID, validation, and packaging facade |
+| jp_core.web | Safe ruby HTML plus framework-neutral furigana toggle assets |
+| jp_core.guardrails | Composable policies returning structured diagnostics |
+| jp_core.pipeline | Deterministic steps and reproducibility manifests |
+| jp_core.agent | Capability discovery and concrete implementation routing |
+
+The corpus owns what a sentence is. A collection owns how it is taught.
+
+Optional integrations are installed with jp-core[tts],
+jp-core[generation], jp-core[morphology], or jp-core[all]. Existing
+jp-core[audio] installations remain supported as an alias for the TTS extra.
+
+See [RECIPES.md](RECIPES.md) for minimal integrations.
+
 The canonical library of reusable Japanese content and Japanese-specific tooling for KakkoiDev projects.
 
 JP Core owns **what Japanese material is**: stable identity, text, readings, translations, register, provenance, review state, furigana, pronunciation, Japanese speech preparation, validation, and reusable generation mechanics.
@@ -73,4 +99,3 @@ The furigana tests are golden-file tests captured from the two original
 implementations. They exist so that extraction cannot silently change how
 hundreds of already-published cards render. Treat a diff there as a bug in the
 library, not a stale fixture.
-
