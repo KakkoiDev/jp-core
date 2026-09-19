@@ -1,4 +1,3 @@
-++ b/src/jp_core/ids.py
 """The model and deck ID registry.
 
 Anki keys models and decks by integer ID, not by name. Two consequences drive
