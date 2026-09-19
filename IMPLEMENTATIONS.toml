@@ -10,9 +10,9 @@ status = "consumer"
 capabilities = ["anki-deck-generation", "furigana", "romaji", "theme", "stable-identities", "validation", "release"]
 description = "Thin compatibility distribution that depends on JP Core and preserves the published jpanki import paths."
 look_here = ["src/jpanki/__init__.py", "pyproject.toml", "tests/"]
-jp_core = "git:daf8833da07d8ed23fa82d1ce406a1266d666c64"
+jp_core = "git:211c0b079bbc18925b3ba2976f78c74b15cf1cc7"
 integration_paths = ["pyproject.toml", "src/jpanki/__init__.py"]
-verified_revision = "26eab77f94e1c9cb2ac92313444e624cbb57965c"
+verified_revision = "d956b04461c78aa9ea1b6f53f6447bd5aee71ed2"
 
 [[projects]]
 id = "nihongo-it-anki"
@@ -22,9 +22,9 @@ status = "consumer"
 capabilities = ["anki-deck-generation", "japanese-tts", "pronunciation-validation", "pitch-accent", "audio-asr-audit", "github-release-publishing"]
 description = "Production consumer for Japanese pronunciation, TTS auditing, card generation, and release guardrails."
 look_here = ["scripts/create_deck.py", "scripts/generate_audio.py", "scripts/check_pronunciation.py", "scripts/get_transcript.py", "docs/tts-audio-debugging.md", "AGENTS.md"]
-jp_core = "git:ba0ba55401c5925e4d817c27c91d699f579e77ee"
+jp_core = "git:211c0b079bbc18925b3ba2976f78c74b15cf1cc7"
 integration_paths = ["pyproject.toml", "scripts/create_deck.py", "scripts/generate_audio.py", "scripts/check_pronunciation.py"]
-verified_revision = "f704d1bb81ab72eb1eaa8db19eb75f5b240946e9"
+verified_revision = "1a43d300206a94081b50225b48144f2d450f07c6"
 
 [[projects]]
 id = "anki-voiced"
@@ -34,9 +34,9 @@ status = "consumer"
 capabilities = ["anki-deck-generation", "command-line-interface", "japanese-tts", "pitch-accent", "furigana", "agent-integration"]
 description = "General-purpose Japanese Anki CLI consuming JP Core furigana primitives while retaining its application-specific audio pipeline."
 look_here = ["src/anki_voiced/", "skills/anki-voiced/", ".claude/agents/anki-voiced.md"]
-jp_core = "git:ac0b2bf56e058e6d93b5c7413f76b9f4dbfd026f"
+jp_core = "git:211c0b079bbc18925b3ba2976f78c74b15cf1cc7"
 integration_paths = ["pyproject.toml", "src/anki_voiced/preprocessing/japanese.py"]
-verified_revision = "ad839d4ee6b7e20f80a91c29632f34ecda738515"
+verified_revision = "541f23e8b0e28a7b8ef5655f9e088800a118194d"
 
 [[projects]]
 id = "bible-japanese-anki"
@@ -46,9 +46,9 @@ status = "consumer"
 capabilities = ["anki-deck-generation", "source-ingestion", "content-provenance", "reading-validation", "japanese-tts"]
 description = "Focused deck with source attribution, fail-closed parsing, and conservative content-generation rules."
 look_here = ["scripts/fetch_wordlists.py", "scripts/parse_wordlists.py", "scripts/validate.py", "scripts/generate_audio.py", "scripts/create_deck.py"]
-jp_core = "git:ba0ba55401c5925e4d817c27c91d699f579e77ee"
+jp_core = "git:211c0b079bbc18925b3ba2976f78c74b15cf1cc7"
 integration_paths = ["pyproject.toml", "scripts/create_deck.py", "scripts/generate_audio.py", "scripts/validate.py"]
-verified_revision = "b2c20ff074cfa4adf76a366efa5d19328e12126c"
+verified_revision = "bec6d47ebf6776465a0df2c116999c157219374f"
 
 [[projects]]
 id = "minihongo"
@@ -58,9 +58,9 @@ status = "consumer"
 capabilities = ["japanese-learning-application", "chat-integration", "tutor-mode", "constrained-japanese", "speech-input", "speech-output", "anki-deck-generation"]
 description = "Reference for integrating Japanese content and tooling with chat, tutor modes, voice, and constrained vocabulary."
 look_here = ["data/", "generate_audio.py", "generate_anki.py", ".claude/skills/minihongo/SKILL.md", "site/"]
-jp_core = "git:ba0ba55401c5925e4d817c27c91d699f579e77ee"
+jp_core = "git:211c0b079bbc18925b3ba2976f78c74b15cf1cc7"
 integration_paths = ["pyproject.toml", "generate_anki.py"]
-verified_revision = "62f2dc2dbcb73988978a5e2546a70ee700a8ffbc"
+verified_revision = "69d3e1651ca1c950723ee84342fd9756bbcc45d7"
 
 [[projects]]
 id = "kanji-roots"
@@ -70,9 +70,9 @@ status = "consumer"
 capabilities = ["japanese-reference-site", "furigana-generation", "kanji-metadata", "compound-verb-analysis"]
 description = "Reference site consuming JP Core's deterministic Japanese reading generation while retaining Markdown presentation locally."
 look_here = ["docs/", "scripts/add-furigana.py"]
-jp_core = "git:00cfb40728b06fabc55e36110b071464c1ed2ae4"
+jp_core = "git:211c0b079bbc18925b3ba2976f78c74b15cf1cc7"
 integration_paths = ["requirements.txt", "scripts/add-furigana.py"]
-verified_revision = "3ae4facf31a3d3a5b8257d1eb725ace501cdb351"
+verified_revision = "b80e0e5343e49e6e4a687bf08a64d74d29a801bd"
 
 [[projects]]
 id = "skool-live-transcript"
