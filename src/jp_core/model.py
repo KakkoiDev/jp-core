@@ -20,7 +20,7 @@ be corrected forever.
 
 **Why deck IDs matter.** minihongo minted them with ``random.randint`` on every
 build, so no two builds produced the same decks and rebuild-twice was never
-idempotent. Derive them from a registered base instead — see :mod:`jpanki.ids`.
+idempotent. Derive them from a registered base instead — see :mod:`jp_core.ids`.
 """
 from __future__ import annotations
 
@@ -72,7 +72,7 @@ def build_deck(deck_id: int, name: str) -> genanki.Deck:
 
     There is deliberately no default for ``deck_id``: randomising it is the bug
     this signature exists to prevent. Get one from
-    :meth:`jpanki.ids.Registration.deck_id`.
+    :meth:`jp_core.ids.Registration.deck_id`.
     """
     return genanki.Deck(deck_id, name)
 

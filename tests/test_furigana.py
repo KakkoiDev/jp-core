@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from jpanki import furigana
+from jp_core import furigana
 
 GOLDEN = json.loads(
     (Path(__file__).parent / "fixtures" / "golden_furigana.json").read_text(encoding="utf-8")

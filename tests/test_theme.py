@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from jpanki import theme
+from jp_core import theme
 
 GOLDEN = json.loads(
     (Path(__file__).parent / "fixtures" / "golden_css.json").read_text(encoding="utf-8")

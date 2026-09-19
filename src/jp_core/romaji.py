@@ -160,7 +160,7 @@ def filename(text: str, *, prefix: str = "", max_length: int = 40) -> str:
     reading rather than the kanji. The result is truncated to ``max_length``
     because some source entries are whole phrases, not words.
     """
-    from jpanki import furigana  # local import: furigana has no romaji dependency
+    from jp_core import furigana  # local import: furigana has no romaji dependency
 
     stem = from_kana(furigana.to_reading(text, clean=True))
     stem = re.sub(r"[^a-z0-9_]+", "", stem).strip("_")
@@ -192,7 +192,7 @@ def same_romanisation(first: str, second: str) -> bool:
 
 
 def _is_kana(text: str) -> bool:
-    from jpanki import furigana
+    from jp_core import furigana
 
     return furigana.is_kana(text)
 

@@ -1,7 +1,7 @@
 """The registry must stay internally consistent, and must catch collisions."""
 import pytest
 
-from jpanki import ids
+from jp_core import ids
 
 
 def test_shipped_registry_is_consistent():

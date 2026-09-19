@@ -4,7 +4,7 @@ from pathlib import Path
 import genanki
 import pytest
 
-from jpanki import model
+from jp_core import model
 
 
 def spec(**overrides) -> model.NoteSpec:

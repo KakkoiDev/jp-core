@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-from jpanki import validate
+from jp_core import validate
 
 
 def write_csv(path, header, rows):

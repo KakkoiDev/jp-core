@@ -6,7 +6,7 @@ import zipfile
 
 import pytest
 
-from jpanki.release import ReleaseError, assert_deck_names_compatible, deck_names
+from jp_core.release import ReleaseError, assert_deck_names_compatible, deck_names
 
 
 def package(tmp_path, filename: str, decks: dict[int, str]):

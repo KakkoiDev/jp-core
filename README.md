@@ -8,7 +8,7 @@ Derived projects own **how that material is taught or presented**: collections, 
 
 ## Current state
 
-JP Core began as a copy of [KakkoiDev/jpanki](https://github.com/KakkoiDev/jpanki). The existing `jpanki` Python package namespace is temporarily preserved so migrations can be incremental and compatibility can be tested before consumers switch.
+JP Core began as a copy of [KakkoiDev/jpanki](https://github.com/KakkoiDev/jpanki). Its Python import namespace is `jp_core`; the original `jpanki` project is retained as a compatibility package that re-exports this API.
 
 - [Migration plan](MIGRATION.md)
 - [Implementation and example registry](IMPLEMENTATIONS.toml)
@@ -36,13 +36,13 @@ JP Core does not own authentication, user accounts, API-key storage, billing, ge
 ## Install
 
 ```bash
-uv add jpanki --git https://github.com/KakkoiDev/jpanki
+uv add jp-core --git https://github.com/KakkoiDev/jp-core
 ```
 
 Audio generation needs the extra and `ffmpeg` on `PATH`:
 
 ```bash
-uv add "jpanki[audio]" --git https://github.com/KakkoiDev/jpanki
+uv add "jp-core[audio]" --git https://github.com/KakkoiDev/jp-core
 ```
 
 ## The two rules that matter
@@ -54,7 +54,7 @@ everyone who re-imports the deck. Pass a key that identifies the note
 independently of what it says:
 
 ```python
-guid = jpanki.note_guid("bible", lesson, japanese)   # not the English gloss
+guid = jp_core.note_guid("bible", lesson, japanese)   # not the English gloss
 ```
 
 **Deck and model IDs are registered, not invented.** An ID collision between

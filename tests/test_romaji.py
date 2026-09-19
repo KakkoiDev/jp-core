@@ -1,7 +1,7 @@
 """Kana → rōmaji, and the loose comparison used to audit hand-written rōmaji."""
 import pytest
 
-from jpanki import romaji
+from jp_core import romaji
 
 
 @pytest.mark.parametrize(
