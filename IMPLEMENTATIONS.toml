@@ -75,6 +75,18 @@ integration_paths = ["requirements.txt", "scripts/add-furigana.py"]
 verified_revision = "b80e0e5343e49e6e4a687bf08a64d74d29a801bd"
 
 [[projects]]
+id = "jp-echo"
+name = "JP Echo"
+url = "https://github.com/KakkoiDev/jp-echo"
+status = "consumer"
+capabilities = ["japanese-learning-application", "chat-integration", "deepseek-translation", "browser-tts", "speech-input", "furigana", "offline-pwa", "history"]
+description = "Offline-first English-to-Japanese shadowing PWA using JP Core's browser sentence, furigana, and backup primitives."
+look_here = ["core.js", "app.js", "speech.js", "db.js", "sw.js"]
+jp_core = "git:9762b1fb699e0b977a8a53d808ca8fcbabff8667"
+integration_paths = ["core.js", "README.md"]
+verified_revision = "75a0b85df129ea0b74d2d30f30d3eb0cc07a11c8"
+
+[[projects]]
 id = "skool-live-transcript"
 name = "Skool Live Transcript"
 url = "https://github.com/KakkoiDev/skool-live-transcript"
