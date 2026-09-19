@@ -1,18 +1,24 @@
-# jpanki
+# JP Core
 
-Shared mechanics for generating Japanese-language Anki decks.
+The canonical library of reusable Japanese content and Japanese-specific tooling for KakkoiDev projects.
 
-Extracted from two projects that had independently converged on the same
-solutions: [minihongo](https://github.com/KakkoiDev/minihongo) and
-[nihongo-it-anki](https://github.com/KakkoiDev/nihongo-it-anki). Both used
-genanki, the same `漢字【かな】` furigana notation, the same Edge TTS voices, the
-same card CSS (Noto Sans JP, `#BC002D` answer rule, night mode, a
-`-webkit-mask` replay-button restyle), and even the same trick for forcing Anki
-to pick up new styling — with zero code in common.
+JP Core owns **what Japanese material is**: stable identity, text, readings, translations, register, provenance, review state, furigana, pronunciation, Japanese speech preparation, validation, and reusable generation mechanics.
 
-This library owns that shared machinery. It deliberately does **not** own
-content schemas or card templates: those are pedagogy, and each consumer keeps
-its own.
+Derived projects own **how that material is taught or presented**: collections, ordering, tiers, cloze targets, cards, curriculum, user interfaces, authentication, model providers, credentials, and infrastructure.
+
+## Current state
+
+JP Core began as a copy of [KakkoiDev/jpanki](https://github.com/KakkoiDev/jpanki). The existing `jpanki` Python package namespace is temporarily preserved so migrations can be incremental and compatibility can be tested before consumers switch.
+
+- [Migration plan](MIGRATION.md)
+- [Implementation and example registry](IMPLEMENTATIONS.toml)
+- [Agent and ownership rules](AGENTS.md)
+
+A KakkoiDev project using JP Core must be registered in `IMPLEMENTATIONS.toml`. Adding the dependency without updating that registry is an incomplete integration.
+
+## Scope boundary
+
+JP Core does not own authentication, user accounts, API-key storage, billing, generic LLM provider routing, conversation persistence, application UI, or deployment infrastructure. It provides Japanese-specific content and transformations that those applications consume.
 
 ## What's here
 
@@ -67,3 +73,4 @@ The furigana tests are golden-file tests captured from the two original
 implementations. They exist so that extraction cannot silently change how
 hundreds of already-published cards render. Treat a diff there as a bug in the
 library, not a stale fixture.
+
