@@ -6,10 +6,13 @@ schema_version = 1
 id = "jpanki"
 name = "jpanki"
 url = "https://github.com/KakkoiDev/jpanki"
-status = "planned-consumer"
+status = "consumer"
 capabilities = ["anki-deck-generation", "furigana", "romaji", "theme", "stable-identities", "validation", "release"]
-description = "Original shared Japanese Anki library. It will become the first compatibility consumer of JP Core."
-look_here = ["src/jpanki/", "tests/"]
+description = "Thin compatibility distribution that depends on JP Core and preserves the published jpanki import paths."
+look_here = ["src/jpanki/__init__.py", "pyproject.toml", "tests/"]
+jp_core = "git:daf8833da07d8ed23fa82d1ce406a1266d666c64"
+integration_paths = ["pyproject.toml", "src/jpanki/__init__.py"]
+verified_revision = "26eab77f94e1c9cb2ac92313444e624cbb57965c"
 
 [[projects]]
 id = "nihongo-it-anki"
