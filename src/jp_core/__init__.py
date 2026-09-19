@@ -10,13 +10,14 @@ those are pedagogy, and each consumer keeps its own.
 `tts` is not imported here: it needs the `audio` extra, and a consumer that only
 builds decks should not have to install edge-tts. Import it directly.
 """
-from jp_core import furigana, ids, model, release, romaji, theme, validate
+from jp_core import furigana, ids, model, reading, release, romaji, theme, validate
 from jp_core.model import NoteSpec, Package, build_deck, build_model, force_style, note_guid, sound_ref, subdeck
 
 __all__ = [
     "furigana",
     "ids",
     "model",
+    "reading",
     "release",
     "romaji",
     "theme",
