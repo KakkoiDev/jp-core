@@ -489,7 +489,7 @@ wheels = [
 
 [[package]]
 name = "jp-core"
-version = "0.1.0"
+version = "0.2.0"
 source = { editable = "." }
 dependencies = [
     { name = "genanki" },
@@ -497,6 +497,12 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
+all = [
+    { name = "edge-tts" },
+    { name = "fugashi" },
+    { name = "pykakasi" },
+    { name = "unidic-lite" },
+]
 audio = [
     { name = "edge-tts" },
 ]
@@ -507,6 +513,9 @@ morphology = [
     { name = "fugashi" },
     { name = "unidic-lite" },
 ]
+tts = [
+    { name = "edge-tts" },
+]
 
 [package.dev-dependencies]
 dev = [
@@ -515,14 +524,19 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "edge-tts", marker = "extra == 'all'", specifier = ">=6.1.0" },
     { name = "edge-tts", marker = "extra == 'audio'", specifier = ">=6.1.0" },
+    { name = "edge-tts", marker = "extra == 'tts'", specifier = ">=6.1.0" },
+    { name = "fugashi", marker = "extra == 'all'", specifier = ">=1.3.0" },
     { name = "fugashi", marker = "extra == 'morphology'", specifier = ">=1.3.0" },
     { name = "genanki", specifier = ">=0.13.1" },
+    { name = "pykakasi", marker = "extra == 'all'", specifier = ">=2.3.0" },
     { name = "pykakasi", marker = "extra == 'generation'", specifier = ">=2.3.0" },
     { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.0.0" },
+    { name = "unidic-lite", marker = "extra == 'all'", specifier = ">=1.0.8" },
     { name = "unidic-lite", marker = "extra == 'morphology'", specifier = ">=1.0.8" },
 ]
-provides-extras = ["audio", "morphology", "generation"]
+provides-extras = ["audio", "tts", "stt", "web", "anki", "morphology", "generation", "all"]
 
 [package.metadata.requires-dev]
 dev = [{ name = "pytest", specifier = ">=8.0" }]
