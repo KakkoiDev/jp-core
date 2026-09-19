@@ -1,3 +1,4 @@
+++ b/src/jp_core/ids.py
 """The model and deck ID registry.
 
 Anki keys models and decks by integer ID, not by name. Two consequences drive
@@ -18,7 +19,10 @@ The registry records history. Add to it; do not renumber a published entry.
 """
 from __future__ import annotations
 
-import tomllib
+try:
+    import tomllib
+except ModuleNotFoundError:  # Python 3.10
+    import tomli as tomllib
 from dataclasses import dataclass
 from pathlib import Path
 
