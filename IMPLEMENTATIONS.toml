@@ -1,0 +1,75 @@
+# Canonical agent router for JP Core implementations.
+# A repository may be marked "consumer" only after it actually depends on JP Core.
+schema_version = 1
+
+[[projects]]
+id = "jpanki"
+name = "jpanki"
+url = "https://github.com/KakkoiDev/jpanki"
+status = "planned-consumer"
+capabilities = ["anki-deck-generation", "furigana", "romaji", "theme", "stable-identities", "validation", "release"]
+description = "Original shared Japanese Anki library. It will become the first compatibility consumer of JP Core."
+look_here = ["src/jpanki/", "tests/"]
+
+[[projects]]
+id = "nihongo-it-anki"
+name = "Nihongo IT Anki"
+url = "https://github.com/KakkoiDev/nihongo-it-anki"
+status = "migration-source"
+capabilities = ["anki-deck-generation", "japanese-tts", "pronunciation-validation", "pitch-accent", "audio-asr-audit", "github-release-publishing"]
+description = "Mature production source for Japanese pronunciation, TTS auditing, card generation, and release guardrails."
+look_here = ["scripts/create_deck.py", "scripts/generate_audio.py", "scripts/check_pronunciation.py", "scripts/get_transcript.py", "docs/tts-audio-debugging.md", "AGENTS.md"]
+
+[[projects]]
+id = "anki-voiced"
+name = "Anki Voiced"
+url = "https://github.com/KakkoiDev/anki-voiced"
+status = "migration-source"
+capabilities = ["anki-deck-generation", "command-line-interface", "japanese-tts", "pitch-accent", "furigana", "agent-integration"]
+description = "General-purpose Japanese Anki CLI and reference workflow for scaffolding, validating, voicing, and building decks."
+look_here = ["src/anki_voiced/", "skills/anki-voiced/", ".claude/agents/anki-voiced.md"]
+
+[[projects]]
+id = "bible-japanese-anki"
+name = "Bible Japanese Anki"
+url = "https://github.com/KakkoiDev/bible-japanese-anki"
+status = "planned-consumer"
+capabilities = ["anki-deck-generation", "source-ingestion", "content-provenance", "reading-validation", "japanese-tts"]
+description = "Focused deck with source attribution, fail-closed parsing, and conservative content-generation rules."
+look_here = ["scripts/fetch_wordlists.py", "scripts/parse_wordlists.py", "scripts/validate.py", "scripts/generate_audio.py", "scripts/create_deck.py"]
+
+[[projects]]
+id = "minihongo"
+name = "Minihongo"
+url = "https://github.com/KakkoiDev/minihongo"
+status = "planned-consumer"
+capabilities = ["japanese-learning-application", "chat-integration", "tutor-mode", "constrained-japanese", "speech-input", "speech-output", "anki-deck-generation"]
+description = "Reference for integrating Japanese content and tooling with chat, tutor modes, voice, and constrained vocabulary."
+look_here = ["data/", "generate_audio.py", "generate_anki.py", ".claude/skills/minihongo/SKILL.md", "site/"]
+
+[[projects]]
+id = "kanji-roots"
+name = "The Roots of Japanese"
+url = "https://github.com/KakkoiDev/kanji-roots"
+status = "candidate-consumer"
+capabilities = ["japanese-reference-site", "furigana-generation", "kanji-metadata", "compound-verb-analysis"]
+description = "Reference site that may consume JP Core furigana and corpus facilities."
+look_here = ["docs/", "scripts/add-furigana.py"]
+
+[[projects]]
+id = "skool-live-transcript"
+name = "Skool Live Transcript"
+url = "https://github.com/KakkoiDev/skool-live-transcript"
+status = "related-example"
+capabilities = ["speech-to-text", "whisper-cpp", "audio-capture", "speaker-detection"]
+description = "Speech-to-text implementation referenced by the existing Anki audio-audit pipeline; not a JP Core dependency."
+look_here = ["README.md"]
+
+[[projects]]
+id = "tmux-agent-voice"
+name = "Tmux Agent Voice"
+url = "https://github.com/KakkoiDev/tmux-agent-voice"
+status = "related-example"
+capabilities = ["text-to-speech", "interruptible-speech", "sentence-segmentation", "japanese-voice-selection"]
+description = "Reference for interruptible speech queues and Japanese voice selection; remains independent."
+look_here = ["scripts/", "tests/", "prototype/"]
