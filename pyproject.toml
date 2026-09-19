@@ -1,4 +1,3 @@
-++ b/pyproject.toml
 [project]
 name = "jp-core"
 version = "0.1.0"
