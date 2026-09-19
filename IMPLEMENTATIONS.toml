@@ -18,46 +18,61 @@ verified_revision = "26eab77f94e1c9cb2ac92313444e624cbb57965c"
 id = "nihongo-it-anki"
 name = "Nihongo IT Anki"
 url = "https://github.com/KakkoiDev/nihongo-it-anki"
-status = "migration-source"
+status = "consumer"
 capabilities = ["anki-deck-generation", "japanese-tts", "pronunciation-validation", "pitch-accent", "audio-asr-audit", "github-release-publishing"]
-description = "Mature production source for Japanese pronunciation, TTS auditing, card generation, and release guardrails."
+description = "Production consumer for Japanese pronunciation, TTS auditing, card generation, and release guardrails."
 look_here = ["scripts/create_deck.py", "scripts/generate_audio.py", "scripts/check_pronunciation.py", "scripts/get_transcript.py", "docs/tts-audio-debugging.md", "AGENTS.md"]
+jp_core = "git:ba0ba55401c5925e4d817c27c91d699f579e77ee"
+integration_paths = ["pyproject.toml", "scripts/create_deck.py", "scripts/generate_audio.py", "scripts/check_pronunciation.py"]
+verified_revision = "f704d1bb81ab72eb1eaa8db19eb75f5b240946e9"
 
 [[projects]]
 id = "anki-voiced"
 name = "Anki Voiced"
 url = "https://github.com/KakkoiDev/anki-voiced"
-status = "migration-source"
+status = "consumer"
 capabilities = ["anki-deck-generation", "command-line-interface", "japanese-tts", "pitch-accent", "furigana", "agent-integration"]
-description = "General-purpose Japanese Anki CLI and reference workflow for scaffolding, validating, voicing, and building decks."
+description = "General-purpose Japanese Anki CLI consuming JP Core furigana primitives while retaining its application-specific audio pipeline."
 look_here = ["src/anki_voiced/", "skills/anki-voiced/", ".claude/agents/anki-voiced.md"]
+jp_core = "git:ac0b2bf56e058e6d93b5c7413f76b9f4dbfd026f"
+integration_paths = ["pyproject.toml", "src/anki_voiced/preprocessing/japanese.py"]
+verified_revision = "ad839d4ee6b7e20f80a91c29632f34ecda738515"
 
 [[projects]]
 id = "bible-japanese-anki"
 name = "Bible Japanese Anki"
 url = "https://github.com/KakkoiDev/bible-japanese-anki"
-status = "planned-consumer"
+status = "consumer"
 capabilities = ["anki-deck-generation", "source-ingestion", "content-provenance", "reading-validation", "japanese-tts"]
 description = "Focused deck with source attribution, fail-closed parsing, and conservative content-generation rules."
 look_here = ["scripts/fetch_wordlists.py", "scripts/parse_wordlists.py", "scripts/validate.py", "scripts/generate_audio.py", "scripts/create_deck.py"]
+jp_core = "git:ba0ba55401c5925e4d817c27c91d699f579e77ee"
+integration_paths = ["pyproject.toml", "scripts/create_deck.py", "scripts/generate_audio.py", "scripts/validate.py"]
+verified_revision = "b2c20ff074cfa4adf76a366efa5d19328e12126c"
 
 [[projects]]
 id = "minihongo"
 name = "Minihongo"
 url = "https://github.com/KakkoiDev/minihongo"
-status = "planned-consumer"
+status = "consumer"
 capabilities = ["japanese-learning-application", "chat-integration", "tutor-mode", "constrained-japanese", "speech-input", "speech-output", "anki-deck-generation"]
 description = "Reference for integrating Japanese content and tooling with chat, tutor modes, voice, and constrained vocabulary."
 look_here = ["data/", "generate_audio.py", "generate_anki.py", ".claude/skills/minihongo/SKILL.md", "site/"]
+jp_core = "git:ba0ba55401c5925e4d817c27c91d699f579e77ee"
+integration_paths = ["pyproject.toml", "generate_anki.py"]
+verified_revision = "62f2dc2dbcb73988978a5e2546a70ee700a8ffbc"
 
 [[projects]]
 id = "kanji-roots"
 name = "The Roots of Japanese"
 url = "https://github.com/KakkoiDev/kanji-roots"
-status = "candidate-consumer"
+status = "consumer"
 capabilities = ["japanese-reference-site", "furigana-generation", "kanji-metadata", "compound-verb-analysis"]
-description = "Reference site that may consume JP Core furigana and corpus facilities."
+description = "Reference site consuming JP Core's deterministic Japanese reading generation while retaining Markdown presentation locally."
 look_here = ["docs/", "scripts/add-furigana.py"]
+jp_core = "git:00cfb40728b06fabc55e36110b071464c1ed2ae4"
+integration_paths = ["requirements.txt", "scripts/add-furigana.py"]
+verified_revision = "3ae4facf31a3d3a5b8257d1eb725ace501cdb351"
 
 [[projects]]
 id = "skool-live-transcript"
