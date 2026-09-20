@@ -35,12 +35,22 @@ from typing import Iterable, NamedTuple
 # is not itself an ideograph.
 BASE_CHARS = r"一-鿿㐀-䶿々"
 
-#: A base run followed by its bracketed reading.
-NOTATION_RE = re.compile(rf"([{BASE_CHARS}]+)【([^】]+)】")
+#: A base run followed by its bracketed reading. The lookahead rejects an
+#: annotation with nothing in it — see :data:`_STRAY_RE`.
+NOTATION_RE = re.compile(rf"([{BASE_CHARS}]+)【(?!\s*】)([^】]+)】")
 
 #: A bracketed annotation on its own, wherever it appears. Used by :func:`strip`,
-#: which historically removed brackets without caring what preceded them.
-_BRACKET_RE = re.compile(r"【[^】]+】")
+#: which historically removed brackets without caring what preceded them. The
+#: class is ``*`` rather than ``+`` so an empty ``【】`` goes with the rest.
+_BRACKET_RE = re.compile(r"【[^】]*】")
+
+#: An annotation carrying no reading at all. A model emits one when it declines
+#: to supply a reading, and every renderer used to pass it straight through —
+#: putting literal brackets on the card and reading them aloud. That is the leak
+#: this module closed for ``徐々``, so the renderers close it here too. Only
+#: *empty* annotations are dropped: ``【ひと】`` with no base form in front of it
+#: is left exactly where it was.
+_STRAY_RE = re.compile(r"【\s*】")
 
 _KANA_RE = re.compile(r"^[぀-ゟ゠-ヿー]+$")
 
@@ -109,8 +119,13 @@ def to_ruby(text: str) -> str:
 
     >>> to_ruby("人【ひと】")
     '<ruby>人<rt>ひと</rt></ruby>'
+
+    An annotation with no reading in it is dropped rather than passed through.
+
+    >>> to_ruby("人【】")
+    '人'
     """
-    return NOTATION_RE.sub(r"<ruby>\1<rt>\2</rt></ruby>", text)
+    return _STRAY_RE.sub("", NOTATION_RE.sub(r"<ruby>\1<rt>\2</rt></ruby>", text))
 
 
 def strip(text: str) -> str:
@@ -153,7 +168,7 @@ def to_reading(
             return base
         return reading
 
-    out = NOTATION_RE.sub(render, text)
+    out = _STRAY_RE.sub("", NOTATION_RE.sub(render, text))
     if clean:
         out = re.sub(r"[、。！？・\s/]", "", out)
     return out
@@ -182,7 +197,7 @@ def keep_base(text: str, *, overrides: Iterable[str] = ()) -> str:
         base, reading = match.group(1), match.group(2)
         return reading if base in override_set else base
 
-    return NOTATION_RE.sub(render, text)
+    return _STRAY_RE.sub("", NOTATION_RE.sub(render, text))
 
 
 def is_kana(text: str) -> bool:
