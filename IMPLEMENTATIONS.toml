@@ -84,7 +84,7 @@ description = "Offline-first English-to-Japanese shadowing PWA using JP Core's b
 look_here = ["core.js", "app.js", "speech.js", "db.js", "sw.js"]
 jp_core = "git:c49ce2134ae8eb226819d63835e9394a6b6e11b0"
 integration_paths = ["core.js", "README.md"]
-verified_revision = "b84fec854c4edca5c1fa025bc6a4e2a7555f81fe"
+verified_revision = "42a3bde9b21fdfc323e6b504dbebfdff346d0d38"
 
 [[projects]]
 id = "skool-live-transcript"
