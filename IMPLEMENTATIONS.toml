@@ -79,12 +79,12 @@ id = "jp-echo"
 name = "JP Echo"
 url = "https://github.com/KakkoiDev/jp-echo"
 status = "consumer"
-capabilities = ["japanese-learning-application", "chat-integration", "deepseek-translation", "browser-tts", "speech-input", "furigana", "offline-pwa", "history", "anki-deck-generation", "fsrs-review"]
-description = "Offline-first English-to-Japanese shadowing PWA using JP Core's browser sentence, furigana, and backup primitives."
-look_here = ["core.js", "app.js", "speech.js", "db.js", "sw.js"]
-jp_core = "git:c49ce2134ae8eb226819d63835e9394a6b6e11b0"
+capabilities = ["japanese-learning-application", "chat-integration", "deepseek-translation", "browser-tts", "speech-input", "furigana", "offline-pwa", "history", "anki-deck-generation", "fsrs-review", "answer-diff"]
+description = "Offline-first English-to-Japanese shadowing PWA using JP Core's browser sentence, furigana, and backup primitives. Its review asks in English and diffs the Japanese the learner says back, so it reads the furigana notation through core.js rather than reimplementing it."
+look_here = ["core.js", "diff.js", "app.js", "speech.js", "db.js", "sw.js"]
+jp_core = "git:9fd8ca4aee604338abc98ffa1b2890728c3d4ab5"
 integration_paths = ["core.js", "README.md"]
-verified_revision = "b3d90c41cb42723a10f55d156c4af621b85c96ff"
+verified_revision = "fee3d1a549b9567f9b8ced91041d3169c1af7107"
 
 [[projects]]
 id = "skool-live-transcript"
