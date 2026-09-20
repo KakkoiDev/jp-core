@@ -26,6 +26,16 @@ ENTRIES = GOLDEN["entries"]
 # so no published minihongo card changes. nihongo-it already had the superset.
 KNOWN_DIVERGENCE = set(GOLDEN["_ruby_divergence"])
 
+# An empty 【】 is an annotation with no reading in it. Both source projects let
+# it through every renderer verbatim, so a card showed 人【】 and the voice read
+# the brackets aloud. jp-core drops it — the same leak, and the same fix, as the
+# repetition mark above. These are the only rows affected.
+STRAY_DIVERGENCE = set(GOLDEN["_stray_divergence"])
+
+
+def assert_no_brackets(got, text):
+    assert "【" not in got and "】" not in got, f"{text!r} leaked a bracket: {got!r}"
+
 # Both source projects kept these lists at module scope; jpanki takes them as
 # parameters. The captured values are pinned here so the tests exercise the same
 # configuration the originals shipped with.
@@ -40,6 +50,8 @@ def ids_for(entries):
 @pytest.mark.parametrize("entry", ENTRIES, ids=ids_for(ENTRIES))
 def test_to_ruby_matches_nihongo_it(entry):
     """nihongo-it's renderer already used the superset class — match it exactly."""
+    if entry["text"] in STRAY_DIVERGENCE:
+        return assert_no_brackets(furigana.to_ruby(entry["text"]), entry["text"])
     assert furigana.to_ruby(entry["text"]) == entry["nit_to_ruby_html"]
 
 
@@ -47,6 +59,8 @@ def test_to_ruby_matches_nihongo_it(entry):
 def test_to_ruby_matches_minihongo_except_known_divergence(entry):
     text = entry["text"]
     got = furigana.to_ruby(text)
+    if text in STRAY_DIVERGENCE:
+        return assert_no_brackets(got, text)
     if text in KNOWN_DIVERGENCE:
         # Diverges by design, and only by gaining ruby it should have had.
         assert got != entry["mh_to_ruby_html"]
@@ -57,6 +71,8 @@ def test_to_ruby_matches_minihongo_except_known_divergence(entry):
 
 @pytest.mark.parametrize("entry", ENTRIES, ids=ids_for(ENTRIES))
 def test_strip_matches_minihongo(entry):
+    if entry["text"] in STRAY_DIVERGENCE:
+        return assert_no_brackets(furigana.strip(entry["text"]), entry["text"])
     assert furigana.strip(entry["text"]) == entry["mh_strip_furigana"]
 
 
@@ -65,6 +81,8 @@ def test_to_reading_matches_minihongo(entry):
     """to_reading with no keep-list is minihongo's furigana_to_reading."""
     text = entry["text"]
     got = furigana.to_reading(text)
+    if text in STRAY_DIVERGENCE:
+        return assert_no_brackets(got, text)
     if text in KNOWN_DIVERGENCE:
         pytest.skip("々 handling diverges by design; covered above")
     assert got == entry["mh_furigana_to_reading"]
@@ -74,6 +92,8 @@ def test_to_reading_matches_minihongo(entry):
 def test_keep_base_matches_nihongo_it_with_overrides(entry):
     """keep_base reproduces extract_furigana as nihongo-it actually configures it."""
     got = furigana.keep_base(entry["text"], overrides=NIT_TTS_OVERRIDES)
+    if entry["text"] in STRAY_DIVERGENCE:
+        return assert_no_brackets(got, entry["text"])
     assert got == entry["nit_extract_furigana"]
 
 
@@ -81,6 +101,8 @@ def test_keep_base_matches_nihongo_it_with_overrides(entry):
 def test_keep_base_matches_nihongo_it_without_overrides(entry):
     """And with the override set empty, isolating the base substitution."""
     got = furigana.keep_base(entry["text"])
+    if entry["text"] in STRAY_DIVERGENCE:
+        return assert_no_brackets(got, entry["text"])
     assert got == entry["nit_extract_furigana_no_overrides"]
 
 
@@ -154,3 +176,20 @@ def test_is_kana(text, expected):
 
 def test_annotations_extracts_pairs():
     assert furigana.annotations("あの人【ひと】は誰【だれ】？") == [("人", "ひと"), ("誰", "だれ")]
+
+
+@pytest.mark.parametrize("malformed", ["人【】", "人【 】", "これ【】はテスト"])
+def test_empty_annotation_never_reaches_a_renderer(malformed):
+    """A reading the model declined to supply must not become visible output."""
+    for render in (furigana.to_ruby, furigana.strip, furigana.to_reading, furigana.keep_base, furigana.normalize):
+        got = render(malformed)
+        assert "【" not in got and "】" not in got, f"{render.__name__} leaked {got!r}"
+
+
+def test_empty_annotation_does_not_disturb_a_real_reading():
+    text = "これ【】はテスト文【ぶん】です"
+    assert furigana.to_ruby(text) == "これはテスト<ruby>文<rt>ぶん</rt></ruby>です"
+    assert furigana.strip(text) == "これはテスト文です"
+    assert furigana.to_reading(text) == "これはテストぶんです"
+    assert furigana.normalize(text) == "これはテスト文【ぶん】です"
+

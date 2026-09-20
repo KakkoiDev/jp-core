@@ -21,6 +21,10 @@
   "少々【しょうしょう】お待【ま】ちください。",
   "度々【たびたび】のご連絡【れんらく】失礼【しつれい】いたします。"
  ],
+ "_stray_divergence": [
+  "人【】"
+ ],
+ "_stray_divergence_note": "Inputs carrying an empty 【】. Both source implementations passed these through every renderer verbatim, putting literal brackets on the card and into the voice. jp-core drops them, the same fix applied to 々. Verified: these are the only affected rows out of 4485.",
  "_nit_tts_kanji_overrides": [
   "一意",
   "中",

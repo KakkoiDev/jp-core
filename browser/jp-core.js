@@ -1,19 +1,23 @@
 export const SCHEMA_VERSION = 1;
-const notation = /([\u3400-\u4dbf\u4e00-\u9fff々]+)【([^】]+)】/g;
+// The lookahead rejects an annotation with nothing in it; `stray` then removes
+// it. A model emits 【】 when it declines to supply a reading, and letting it
+// through puts literal brackets on screen and reads them aloud.
+const notation = /([\u3400-\u4dbf\u4e00-\u9fff々]+)【(?!\s*】)([^】]+)】/g;
+const stray = /【[^】]*】/g;
 const escapeHtml = value => value.replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 
 export function normalizeFurigana(value = "") {
   let out = "", offset = 0;
   for (const match of value.matchAll(notation)) {
-    out += value.slice(offset, match.index).replace(/【[^】]+】/g, "");
+    out += value.slice(offset, match.index).replace(stray, "");
     out += match[0];
     offset = match.index + match[0].length;
   }
-  return out + value.slice(offset).replace(/【[^】]+】/g, "");
+  return out + value.slice(offset).replace(stray, "");
 }
 
 export function stripFurigana(value = "") {
-  return value.replace(/【[^】]+】/g, "");
+  return value.replace(stray, "");
 }
 
 export function rubyHtml(value = "") {
