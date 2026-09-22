@@ -7,6 +7,7 @@ alter the rendering of cards that are already in users' collections.
 
 The one sanctioned divergence is documented in KNOWN_DIVERGENCE below.
 """
+import re
 import json
 from pathlib import Path
 
@@ -193,3 +194,55 @@ def test_empty_annotation_does_not_disturb_a_real_reading():
     assert furigana.to_reading(text) == "これはテストぶんです"
     assert furigana.normalize(text) == "これはテスト文【ぶん】です"
 
+
+
+# --- render and to_mkdocs_ruby, over the same corpus --------------------------
+#
+# Both are new, and both walk the notation, so the cheapest way to trust them is
+# the 4485 real bracketed values already captured above rather than a handful of
+# invented ones.
+
+
+@pytest.mark.parametrize("text", [entry["text"] for entry in ENTRIES])
+def test_render_round_trips_through_parse(text):
+    """parse then render is the identity, malformed input included.
+
+    Not `normalize`: parse deliberately keeps a stray bracket verbatim in a
+    plain token, so 'API【エーピーアイ】' survives the round trip although
+    normalize would strip it. That is the guarantee reading.annotate depends on
+    when it reassembles a sentence around annotations already in it.
+    """
+    assert furigana.render(furigana.parse(text)) == text
+
+
+@pytest.mark.parametrize("text", [entry["text"] for entry in ENTRIES])
+def test_mkdocs_ruby_annotates_exactly_what_ruby_does(text):
+    """The two renderers must disagree about nothing except their output
+    syntax. Whatever one cannot annotate — a reading with no base form in
+    front of it, an unclosed bracket — the other leaves alone identically."""
+    leftover = re.compile(r"\u3010[^\u3011]*\u3011")
+    assert leftover.findall(furigana.to_mkdocs_ruby(text)) == leftover.findall(furigana.to_ruby(text))
+
+
+def test_mkdocs_ruby_braces_only_multi_character_bases():
+    assert furigana.to_mkdocs_ruby("人【ひと】") == "人(ひと)"
+    assert furigana.to_mkdocs_ruby("日本【にほん】") == "{日本(にほん)}"
+    assert furigana.to_mkdocs_ruby("徐々【じょじょ】") == "{徐々(じょじょ)}"
+
+
+def test_mkdocs_ruby_drops_an_empty_annotation():
+    assert furigana.to_mkdocs_ruby("人【】") == "人"
+
+
+def test_mkdocs_ruby_leaves_source_parentheses_alone():
+    """The corpus has explanatory text with its own parentheses in it. They are
+    not annotations and must survive untouched — which is also why this
+    rendering is for documentation sites and the bracketed form stays canonical."""
+    text = "する事【こと】がしたい (始【はじ】め + たい)"
+    assert furigana.to_mkdocs_ruby(text) == "する事(こと)がしたい (始(はじ)め + たい)"
+
+
+def test_render_writes_an_empty_reading_bare():
+    """Nothing render produces should need normalizing afterwards."""
+    assert furigana.render([furigana.Token("人", ""), furigana.Token("です")]) == "人です"
+    assert furigana.render([furigana.Token("人", "ひと")]) == "人【ひと】"

@@ -71,3 +71,23 @@ Include the CSS once and load the JavaScript after the page body.
 When a new project adopts JP Core, update IMPLEMENTATIONS.toml in the same
 change or immediately afterward. Record its exact URL, integration paths,
 pinned JP Core revision, and verified project revision.
+
+## Generate furigana for a sentence
+
+    from jp_core import furigana, reading
+
+    annotated = reading.annotate("受け付けは一階にあります。")
+    # '受【う】け付【つ】けは一階【いっかい】にあります。'
+
+    furigana.to_ruby(annotated)         # for a card
+    furigana.to_mkdocs_ruby(annotated)  # for a documentation site
+    furigana.strip(annotated)           # back to plain text
+
+Needs `jp-core[morphology]`. Readings already in the text are kept, so a
+correction by hand survives the next build, and a compound the analyser splits
+is repaired from `reading.PRONUNCIATION_OVERRIDES` — extend it per call with
+`reading.annotate(text, overrides={...})`.
+
+In a browser, `browser/jp-core.js` carries the same alignment and the same
+override table; supply the token stream from an analyser of your own and call
+`readingsToNotation`.
