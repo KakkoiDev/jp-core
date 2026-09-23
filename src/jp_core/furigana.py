@@ -94,6 +94,24 @@ def parse(text: str) -> list[Token]:
     return tokens
 
 
+def render(tokens: Iterable[Token]) -> str:
+    """Write tokens back out as notation — the inverse of :func:`parse`.
+
+    >>> render(parse("あの人【ひと】は"))
+    'あの人【ひと】は'
+
+    A token carrying an empty reading is written bare rather than as an empty
+    annotation, so nothing this produces needs normalizing afterwards.
+
+    >>> render([Token("人", ""), Token("です")])
+    '人です'
+    """
+    return "".join(
+        f"{token.base}【{token.reading}】" if token.reading else token.base
+        for token in tokens
+    )
+
+
 def normalize(text: str) -> str:
     """Keep valid kanji readings and remove redundant kana annotations.
 
@@ -126,6 +144,35 @@ def to_ruby(text: str) -> str:
     '人'
     """
     return _STRAY_RE.sub("", NOTATION_RE.sub(r"<ruby>\1<rt>\2</rt></ruby>", text))
+
+
+def to_mkdocs_ruby(text: str) -> str:
+    """Render as mkdocs-ruby-plugin annotations for a documentation site.
+
+    The plugin writes a reading in parentheses after its base form, and braces
+    a multi-character base so the reading spans the whole run instead of
+    attaching to the last character:
+
+    >>> to_mkdocs_ruby("人【ひと】です")
+    '人(ひと)です'
+    >>> to_mkdocs_ruby("日本【にほん】です")
+    '{日本(にほん)}です'
+
+    An annotation with no reading in it is dropped, as everywhere else.
+
+    >>> to_mkdocs_ruby("人【】")
+    '人'
+
+    This is a renderer, not a second notation. :mod:`jp_core.reading` emits the
+    canonical bracketed form and a documentation build converts at the edge, so
+    a reading that is right on a card is the same reading that reaches the site.
+    """
+
+    def render(match: re.Match) -> str:
+        base, reading = match.group(1), match.group(2)
+        return f"{{{base}({reading})}}" if len(base) > 1 else f"{base}({reading})"
+
+    return _STRAY_RE.sub("", NOTATION_RE.sub(render, text))
 
 
 def strip(text: str) -> str:

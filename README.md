@@ -51,6 +51,7 @@ JP Core does not own authentication, user accounts, API-key storage, billing, ge
 | Module | Owns |
 |---|---|
 | `furigana` | The `漢字【かな】` notation — one parser, several renderers |
+| `reading` | Generating those readings from a morphological analyser, and the compounds analysers get wrong |
 | `romaji` | kana → rōmaji, for filenames and reading cross-checks |
 | `theme` | The card CSS design system, as composable layers |
 | `model` | genanki model/deck/package construction, media refs |
