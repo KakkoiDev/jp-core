@@ -30,10 +30,15 @@ from __future__ import annotations
 import re
 from typing import Iterable, NamedTuple
 
-# CJK ideographs, CJK ext-A, and 々 (the repetition mark, U+3005, as in 徐々).
-# 々 belongs here because it is part of the *written* base form even though it
-# is not itself an ideograph.
-BASE_CHARS = r"一-鿿㐀-䶿々"
+# CJK ideographs, CJK ext-A, 々 (the repetition mark, U+3005, as in 徐々), and
+# the supplementary planes. 々 belongs here because it is part of the *written*
+# base form even though it is not itself an ideograph.
+#
+# U+20000-U+3134F is ext-B through ext-G in one span; the unassigned gaps in it
+# appear in no real text. It is not decoration: 𠮟 (U+20B9F) is on the joyo
+# list, and without this a reading bracketed onto it was silently dropped —
+# 𠮟【しか】る came back as 𠮟る, with no error anywhere.
+BASE_CHARS = "一-鿿㐀-䶿々\U00020000-\U0003134F"
 
 #: A base run followed by its bracketed reading. The lookahead rejects an
 #: annotation with nothing in it — see :data:`_STRAY_RE`.
