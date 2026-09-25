@@ -82,7 +82,7 @@ status = "consumer"
 capabilities = ["japanese-learning-application", "chat-integration", "deepseek-translation", "browser-tts", "speech-input", "furigana", "reading-alignment", "offline-pwa", "history", "anki-deck-generation", "fsrs-review", "answer-diff"]
 description = "Offline-first English-to-Japanese shadowing PWA using JP Core's browser sentence, furigana, and backup primitives. Its review asks in English and diffs the Japanese the learner says back, so it reads the furigana notation through core.js rather than reimplementing it."
 look_here = ["core.js", "diff.js", "app.js", "speech.js", "db.js", "sw.js"]
-jp_core = "git:c84048782e545420dd7b7b62d2556789cd8d6f98"
+jp_core = "git:3b38dcd8f85a63a791178b366e0425ebea2341ac"
 integration_paths = ["core.js", "README.md"]
 verified_revision = "6bdda3f8f6a60224eb62169f3a969ea43b4cc776"
 
