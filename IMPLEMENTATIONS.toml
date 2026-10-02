@@ -19,11 +19,11 @@ id = "nihongo-it-anki"
 name = "Nihongo IT Anki"
 url = "https://github.com/KakkoiDev/nihongo-it-anki"
 status = "consumer"
-capabilities = ["anki-deck-generation", "japanese-tts", "pronunciation-validation", "pitch-accent", "audio-asr-audit", "github-release-publishing"]
+capabilities = ["anki-deck-generation", "japanese-tts", "pronunciation-validation", "pitch-accent", "audio-asr-audit", "github-release-publishing", "echo-json-export"]
 description = "Production consumer for Japanese pronunciation, TTS auditing, card generation, and release guardrails."
 look_here = ["scripts/create_deck.py", "scripts/generate_audio.py", "scripts/check_pronunciation.py", "scripts/get_transcript.py", "docs/tts-audio-debugging.md", "AGENTS.md"]
 jp_core = "git:211c0b079bbc18925b3ba2976f78c74b15cf1cc7"
-integration_paths = ["pyproject.toml", "scripts/create_deck.py", "scripts/generate_audio.py", "scripts/check_pronunciation.py"]
+integration_paths = ["pyproject.toml", "scripts/create_deck.py", "scripts/generate_audio.py", "scripts/check_pronunciation.py", "scripts/export_echo.mjs", "imports/jp-core.mjs"]
 verified_revision = "1a43d300206a94081b50225b48144f2d450f07c6"
 
 [[projects]]
@@ -55,11 +55,11 @@ id = "minihongo"
 name = "Minihongo"
 url = "https://github.com/KakkoiDev/minihongo"
 status = "consumer"
-capabilities = ["japanese-learning-application", "chat-integration", "tutor-mode", "constrained-japanese", "speech-input", "speech-output", "anki-deck-generation"]
+capabilities = ["japanese-learning-application", "chat-integration", "tutor-mode", "constrained-japanese", "speech-input", "speech-output", "anki-deck-generation", "echo-starter-library"]
 description = "Reference for integrating Japanese content and tooling with chat, tutor modes, voice, and constrained vocabulary."
 look_here = ["data/", "generate_audio.py", "generate_anki.py", ".claude/skills/minihongo/SKILL.md", "site/"]
 jp_core = "git:211c0b079bbc18925b3ba2976f78c74b15cf1cc7"
-integration_paths = ["pyproject.toml", "generate_anki.py"]
+integration_paths = ["pyproject.toml", "generate_anki.py", "scripts/export_echo.mjs", "imports/jp-core.mjs"]
 verified_revision = "69d3e1651ca1c950723ee84342fd9756bbcc45d7"
 
 [[projects]]
@@ -79,10 +79,10 @@ id = "jp-echo"
 name = "JP Echo"
 url = "https://github.com/KakkoiDev/jp-echo"
 status = "consumer"
-capabilities = ["japanese-learning-application", "chat-integration", "deepseek-translation", "browser-tts", "speech-input", "furigana", "reading-alignment", "offline-pwa", "history", "anki-deck-generation", "fsrs-review", "answer-diff", "sentence-content-replacement", "japanese-word-matching", "grammar-evidence-spans"]
+capabilities = ["japanese-learning-application", "chat-integration", "deepseek-translation", "browser-tts", "speech-input", "furigana", "reading-alignment", "offline-pwa", "history", "anki-deck-generation", "fsrs-review", "answer-diff", "sentence-content-replacement", "japanese-word-matching", "grammar-evidence-spans", "content-deduplicated-imports", "starter-catalogues"]
 description = "Offline-first English-to-Japanese shadowing PWA using JP Core's browser sentence, furigana, and backup primitives. Its review asks in English and diffs the Japanese the learner says back, so it reads the furigana notation through core.js rather than reimplementing it."
 look_here = ["core.js", "japanese-words.js", "grammar-spans.js", "words.js", "diff.js", "app.js", "speech.js", "db.js", "sw.js"]
-jp_core = "git:feat/grammar-sentence-links"
+jp_core = "git:feat/safe-starter-imports"
 integration_paths = ["core.js", "japanese-words.js", "grammar-spans.js", "README.md"]
 verified_revision = "6bdda3f8f6a60224eb62169f3a969ea43b4cc776"
 
