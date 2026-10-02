@@ -19,3 +19,5 @@ consumers must display an unknown-word state rather than substring definitions.
 `grammar-spans.js` validates grammar analysis against known point IDs and exact
 quoted sentence text, including occurrence indices for repeated particles.
 Consumers own grammar catalogues, AI providers and teaching UI.
+
+`sentenceIdentity(record)` keys a sentence by its language pair and normalized target text, ignoring furigana and Japanese layout whitespace. `mergeSentences(current, incoming)` preserves existing content-duplicate card IDs and scheduling, appends new sentences, unions grammar/vocabulary links, and avoids replacing reviewed scheduling with an unreviewed backup. Untagged sentences remain untagged.
