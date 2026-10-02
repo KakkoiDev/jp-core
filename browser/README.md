@@ -9,3 +9,9 @@ the JP Core revision in their implementation registry entry.
 plain reading fields together, preserving the record identity, creation date,
 review history and scheduling. Consumers must invalidate their derived content
 tags when rewriting a sentence. Verify with `node --test browser/test/*.test.js`.
+
+`japanese-words.js` exports `createJapaneseWordMatcher(dictionary)` for lexical
+coverage and clickable surface spans. Dictionary records provide `id`, `w`,
+`r`, `k` (optional), and `pos`. Spans include alternative dictionary IDs for
+ambiguous readings. Unmatched katakana runs are returned whole with a null ID;
+consumers must display an unknown-word state rather than substring definitions.
