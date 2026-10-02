@@ -15,3 +15,7 @@ coverage and clickable surface spans. Dictionary records provide `id`, `w`,
 `r`, `k` (optional), and `pos`. Spans include alternative dictionary IDs for
 ambiguous readings. Unmatched katakana runs are returned whole with a null ID;
 consumers must display an unknown-word state rather than substring definitions.
+
+`grammar-spans.js` validates grammar analysis against known point IDs and exact
+quoted sentence text, including occurrence indices for repeated particles.
+Consumers own grammar catalogues, AI providers and teaching UI.
