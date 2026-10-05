@@ -79,11 +79,11 @@ id = "jp-echo"
 name = "JP Echo"
 url = "https://github.com/KakkoiDev/jp-echo"
 status = "consumer"
-capabilities = ["japanese-learning-application", "chat-integration", "deepseek-translation", "browser-tts", "speech-input", "furigana", "reading-alignment", "offline-pwa", "history", "anki-deck-generation", "fsrs-review", "answer-diff", "sentence-content-replacement", "japanese-word-matching", "grammar-evidence-spans", "content-deduplicated-imports", "starter-catalogues"]
+capabilities = ["japanese-learning-application", "chat-integration", "deepseek-translation", "browser-tts", "speech-input", "furigana", "reading-alignment", "dictionary-readings", "furigana-audio-alignment", "offline-pwa", "history", "anki-deck-generation", "fsrs-review", "answer-diff", "sentence-content-replacement", "japanese-word-matching", "grammar-evidence-spans", "content-deduplicated-imports", "starter-catalogues"]
 description = "Offline-first English-to-Japanese shadowing PWA using JP Core's browser sentence, furigana, and backup primitives. Its review asks in English and diffs the Japanese the learner says back, so it reads the furigana notation through core.js rather than reimplementing it."
-look_here = ["core.js", "japanese-words.js", "grammar-spans.js", "words.js", "diff.js", "app.js", "speech.js", "db.js", "sw.js"]
+look_here = ["core.js", "japanese-readings.js", "japanese-words.js", "grammar-spans.js", "words.js", "diff.js", "app.js", "speech.js", "db.js", "sw.js"]
 jp_core = "git:feat/safe-starter-imports"
-integration_paths = ["core.js", "japanese-words.js", "grammar-spans.js", "README.md"]
+integration_paths = ["core.js", "japanese-readings.js", "japanese-words.js", "grammar-spans.js", "README.md"]
 verified_revision = "6bdda3f8f6a60224eb62169f3a969ea43b4cc776"
 
 [[projects]]
