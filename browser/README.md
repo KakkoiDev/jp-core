@@ -29,3 +29,8 @@ learner overrides take precedence. `readingText(notation)` feeds the displayed
 reading to speech. `validateReadingCorrection` rejects changed surface text,
 missing annotations and non-kana readings. Consumers own model requests,
 backfill scheduling, credentials and persistence.
+
+Run the resolver again after any model-based reading correction. A model may
+regress a known dictionary reading (for example 言【げん】う instead of 言【い】う).
+A saved validation flag alone must not bypass this reconciliation when displaying
+or correcting a sentence. Explicit learner overrides still take precedence.
