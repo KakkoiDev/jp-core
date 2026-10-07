@@ -34,3 +34,9 @@ Run the resolver again after any model-based reading correction. A model may
 regress a known dictionary reading (for example 言【げん】う instead of 言【い】う).
 A saved validation flag alone must not bypass this reconciliation when displaying
 or correcting a sentence. Explicit learner overrides still take precedence.
+
+Reading resolver version 2 uses longest-first dictionary matches across native
+word-segmentation boundaries. Verb stems include internal kana, so compounds such
+as 話し合う keep their full stem reading when conjugated. An ambiguous longer
+match is reported for contextual correction; it is never discarded in favour
+of shorter kanji entries. This does not make ambiguous readings context-free.
