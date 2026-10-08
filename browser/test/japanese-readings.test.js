@@ -40,3 +40,10 @@ test('longest compound crosses tokenizer splits instead of trusting isolated kan
  assert.equal(resolve('行【おこな】った').text,'行【おこな】った');
  assert.equal(resolve('行【ぎょう】いました').text,'行【おこな】いました');
  });
+
+ test('speech hints distinguish lexical ha and he from particles',async()=>{
+ const {speechText}=await import('../japanese-readings.js');
+ assert.equal(speechText('ログ吐【は】いてる？'),'ログハいてる？');
+ assert.equal(speechText('彼【かれ】は部屋【へや】へ行【い】く。'),'カレはヘヤへイく。');
+ assert.equal(readingText('吐【は】いてる'),'はいてる');
+ });
