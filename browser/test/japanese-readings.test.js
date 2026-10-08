@@ -30,3 +30,13 @@ test('longest compound crosses tokenizer splits instead of trusting isolated kan
   assert.equal(resolve('話【はなし】し合【ごう】う').text,'話【はな】し合【あ】う');
  }finally{Intl.Segmenter=native}
 });
+
+ test('special iku conjugations do not use the noun gyou reading',()=>{
+ const resolve=createReadingResolver([{w:'行',r:'ぎょう',pos:['n']},{w:'行く',r:'いく',pos:['v5k-s','vi']},{w:'行う',r:'おこなう',pos:['v5u','vt']}]);
+ for(const suffix of ['く','きます','かない','ける','こう','った','って']){
+  assert.equal(resolve(`行【ぎょう】${suffix}`).text,`行【い】${suffix}`,suffix);
+ }
+ assert.equal(resolve('行【ぎょう】を').text,'行【ぎょう】を');
+ assert.equal(resolve('行【おこな】った').text,'行【おこな】った');
+ assert.equal(resolve('行【ぎょう】いました').text,'行【おこな】いました');
+ });
