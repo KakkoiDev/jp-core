@@ -65,3 +65,15 @@ test('dictionary special regular categories participate in conjugation matching'
  const resolve=createReadingResolver([{w:w[0],r:'ご',pos:['n']},{w,r,pos:[pos]}]);assert.equal(resolve(input).text,expected);
  }
 });
+
+test('onaji and muzukashii do not depend on native tokenizer availability or boundaries',()=>{
+ const native=Intl.Segmenter;
+ try{
+ for(const segmenter of [undefined,class {segment(text){return [{segment:text,index:0}]}}]){
+ Intl.Segmenter=segmenter;
+ const resolve=createReadingResolver([{w:'同',r:'どう',pos:['n']},{w:'同じ',r:'おなじ',pos:['adj-f']},{w:'難',r:'なん',pos:['n']},{w:'難しい',r:'むずかしい',pos:['adj-i']}]);
+ assert.equal(resolve('同【どう】じような').text,'同【おな】じような');
+ assert.equal(resolve('難【なん】しいところです').text,'難【むずか】しいところです');
+ }
+ }finally{Intl.Segmenter=native}
+});
