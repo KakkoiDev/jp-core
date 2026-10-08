@@ -47,3 +47,21 @@ test('longest compound crosses tokenizer splits instead of trusting isolated kan
  assert.equal(speechText('彼【かれ】は部屋【へや】へ行【い】く。'),'カレはヘヤへイく。');
  assert.equal(readingText('吐【は】いてる'),'はいてる');
  });
+
+test('adjectives win over isolated kanji even when the browser splits the word',()=>{
+ const native=Intl.Segmenter;
+ try{
+ Intl.Segmenter=class {segment(text){return [...text].map((segment,index)=>({segment,index}))}};
+ const resolve=createReadingResolver([{w:'難',r:'なん',pos:['n']},{w:'難い',r:'かたい',pos:['adj-i']},{w:'難しい',r:'むずかしい',pos:['adj-i']},{w:'高',r:'こう',pos:['n']},{w:'高い',r:'たかい',pos:['adj-i']}]);
+ for(const ending of ['い','くない','かった','ければ'])assert.equal(resolve(`難【なん】し${ending}`).text,`難【むずか】し${ending}`);
+ assert.equal(resolve('高【こう】かった').text,'高【たか】かった');
+ }finally{Intl.Segmenter=native}
+});
+test('dictionary special regular categories participate in conjugation matching',()=>{
+ for(const [w,r,pos,input,expected] of [
+ ['有る','ある','v5r-i','有【ゆう】った','有【あ】った'],
+ ['問う','とう','v5u-s','問【もん】わない','問【と】わない'],
+ ['呉れる','くれる','v1-s','呉【ご】れた','呉【く】れた']]){
+ const resolve=createReadingResolver([{w:w[0],r:'ご',pos:['n']},{w,r,pos:[pos]}]);assert.equal(resolve(input).text,expected);
+ }
+});
