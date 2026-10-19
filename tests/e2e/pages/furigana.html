@@ -18,10 +18,10 @@
 </main>
 <script>
 (()=>{const k="jp-core-furigana-hidden",c=k,b=document.body;
-const apply=v=>{b.classList.toggle(c,v);localStorage.setItem(k,v?"1":"0")};
-document.querySelectorAll("[data-jp-core-furigana-toggle]").forEach(x=>{
-x.addEventListener("click",()=>apply(!b.classList.contains(c)));
-x.setAttribute("aria-pressed",String(!b.classList.contains(c)))});
+const t=[...document.querySelectorAll("[data-jp-core-furigana-toggle]")];
+const apply=v=>{b.classList.toggle(c,v);localStorage.setItem(k,v?"1":"0");
+t.forEach(x=>x.setAttribute("aria-pressed",String(!v)))};
+t.forEach(x=>x.addEventListener("click",()=>apply(!b.classList.contains(c))));
 apply(localStorage.getItem(k)==="1")})();
 </script>
 </body>
