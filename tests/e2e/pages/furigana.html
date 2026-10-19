@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Furigana toggle</title>
+<!-- Built from jp_core.web (ruby_html, toggle_button, FURIGANA_CSS, FURIGANA_TOGGLE_JS); tests/test_scenarios.py keeps it in step. -->
+<style>
+.jp-core-furigana-hidden rt{display:none}
+.jp-core-furigana-toggle{cursor:pointer}
+@media print{.jp-core-furigana-toggle{display:none}}
+</style>
+</head>
+<body>
+<main>
+<p id="sentence" lang="ja"><ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。</p>
+<button type="button" class="jp-core-furigana-toggle" data-jp-core-furigana-toggle aria-pressed="true">ふりがな</button>
+</main>
+<script>
+(()=>{const k="jp-core-furigana-hidden",c=k,b=document.body;
+const apply=v=>{b.classList.toggle(c,v);localStorage.setItem(k,v?"1":"0")};
+document.querySelectorAll("[data-jp-core-furigana-toggle]").forEach(x=>{
+x.addEventListener("click",()=>apply(!b.classList.contains(c)));
+x.setAttribute("aria-pressed",String(!b.classList.contains(c)))});
+apply(localStorage.getItem(k)==="1")})();
+</script>
+</body>
+</html>
