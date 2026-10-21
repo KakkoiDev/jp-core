@@ -77,3 +77,22 @@ test('onaji and muzukashii do not depend on native tokenizer availability or bou
  }
  }finally{Intl.Segmenter=native}
 });
+
+test('irregular kuru readings outrank the standalone rai prefix for all modern forms',()=>{
+ const words=[{w:'来',r:'らい',pos:['pref']},{w:'来る',r:'くる',pos:['vk']},{w:'来る',r:'きたる',pos:['adj-pn']},{w:'来年',r:'らいねん',pos:['n']},{w:'将来',r:'しょうらい',pos:['n']}];
+ const native=Intl.Segmenter;
+ try{for(const segmenter of [native,undefined]){
+ Intl.Segmenter=segmenter;const resolve=createReadingResolver(words);
+ for(const [suffix,reading] of [['た','き'],['て','き'],['ます','き'],['ました','き'],['たい','き'],['なさい','き'],['ながら','き'],['にくい','き'],['そう','き'],['ちゃった','き'],['すぎる','き'],['る','く'],['れば','く'],['ない','こ'],['なくて','こ'],['なかった','こ'],['なければ','こ'],['なきゃ','こ'],['よう','こ'],['い','こ'],['られる','こ'],['れる','こ'],['させる','こ'],['ず','こ'],['ぬ','こ']]){
+  const result=resolve(`来【らい】${suffix}`);assert.equal(result.text,`来【${reading}】${suffix}`,suffix);assert.equal(result.issues.length,0,suffix);
+ }
+ assert.equal(resolve('来年【らいねん】も来【らい】た。').text,'来年【らいねん】も来【き】た。');
+ assert.equal(resolve('将来【しょうらい】').text,'将来【しょうらい】');
+ assert.equal(resolve('来【きた】る五月').text,'来【きた】る五月');
+ }}finally{Intl.Segmenter=native}
+});
+test('kuru compounds retain their prefix and inflect as one dictionary word',()=>{
+ const resolve=createReadingResolver([{w:'来',r:'らい',pos:['pref']},{w:'来る',r:'くる',pos:['vk']},{w:'やって来る',r:'やってくる',pos:['vk']}]);
+ assert.equal(resolve('やって来【らい】た').text,'やって来【き】た');
+ assert.equal(resolve('やって来【らい】ない').text,'やって来【こ】ない');
+});
