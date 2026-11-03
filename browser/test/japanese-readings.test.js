@@ -104,3 +104,10 @@ test("い-adjective and ichidan stems take すぎる, そう and さ: 多すぎ�
  assert.equal(resolve("高さ").text,"高【たか】さ");
  assert.equal(resolve("食べすぎた").text,"食【た】べすぎた");
 });
+
+test("何 is なに or なん by what follows it, and a wrong saved reading is corrected",()=>{
+ const resolve=createReadingResolver([{w:"何",r:"なに"},{w:"何",r:"なん"},{w:"苗字",r:"みょうじ"}]);
+ assert.equal(resolve("苗字【みょうじ】は何【なん】？").text,"苗字【みょうじ】は何【なに】？");
+ assert.equal(resolve("何を").text,"何【なに】を");assert.equal(resolve("何か").text,"何【なに】か");
+ assert.equal(resolve("何ですか").text,"何【なん】ですか");assert.equal(resolve("何の").text,"何【なん】の");
+});
