@@ -479,6 +479,12 @@ wheels = [
 ]
 
 [[package]]
+name = "ipadic"
+version = "1.0.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e7/4e/c459f94d62a0bef89f866857bc51b9105aff236b83928618315b41a26b7b/ipadic-1.0.0.tar.gz", hash = "sha256:f5923d31eca6131acaaf18ed28d8998665b1347b640d3a6476f64650e9a71c07", size = 13413189, upload-time = "2020-07-20T03:35:40.209Z" }
+
+[[package]]
 name = "jaconv"
 version = "0.5.0"
 source = { registry = "https://pypi.org/simple" }
@@ -500,6 +506,7 @@ dependencies = [
 all = [
     { name = "edge-tts" },
     { name = "fugashi" },
+    { name = "ipadic" },
     { name = "pykakasi" },
     { name = "unidic-lite" },
 ]
@@ -511,6 +518,7 @@ generation = [
 ]
 morphology = [
     { name = "fugashi" },
+    { name = "ipadic" },
     { name = "unidic-lite" },
 ]
 tts = [
@@ -530,6 +538,8 @@ requires-dist = [
     { name = "fugashi", marker = "extra == 'all'", specifier = ">=1.3.0" },
     { name = "fugashi", marker = "extra == 'morphology'", specifier = ">=1.3.0" },
     { name = "genanki", specifier = ">=0.13.1" },
+    { name = "ipadic", marker = "extra == 'all'", specifier = ">=1.0.0" },
+    { name = "ipadic", marker = "extra == 'morphology'", specifier = ">=1.0.0" },
     { name = "pykakasi", marker = "extra == 'all'", specifier = ">=2.3.0" },
     { name = "pykakasi", marker = "extra == 'generation'", specifier = ">=2.3.0" },
     { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.0.0" },

@@ -246,3 +246,14 @@ def test_render_writes_an_empty_reading_bare():
     """Nothing render produces should need normalizing afterwards."""
     assert furigana.render([furigana.Token("人", ""), furigana.Token("です")]) == "人です"
     assert furigana.render([furigana.Token("人", "ひと")]) == "人【ひと】"
+
+
+def test_normalize_trims_kana_a_reading_repeats_before_its_kanji():
+    # やり方【やりかた】 put やりかた over 方 and was spoken やりやりかた.
+    assert furigana.normalize("標準【ひょうじゅん】のやり方【やりかた】に合【あ】わせます。") == "標準【ひょうじゅん】のやり方【かた】に合【あ】わせます。"
+    assert furigana.normalize("お茶【おちゃ】とご飯【ごはん】") == "お茶【ちゃ】とご飯【はん】"
+    # A one-kana overlap is chance, and nothing is trimmed to empty.
+    assert furigana.normalize("ここ子供【こども】") == "ここ子供【こども】"
+    assert furigana.normalize("まだ大学【だいがく】") == "まだ大学【だいがく】"
+    assert furigana.to_reading(furigana.normalize("やり方【やりかた】")) == "やりかた"
+
