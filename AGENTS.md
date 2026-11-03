@@ -28,4 +28,6 @@ When looking for an implementation:
 
 ## Migration discipline
 
+Every public feature has its Given/When/Then scenarios in SCENARIOS.md and one end-to-end test per scenario, named after its title (tools/test-core/README.md). Write the scenario and its failing test before the change.
+
 Migrate one capability at a time. Add or strengthen JP Core tests before switching a consumer. Preserve published Anki IDs, note GUIDs, schemas, and review history. Do not delete the consumer's old implementation until parity is proven.
