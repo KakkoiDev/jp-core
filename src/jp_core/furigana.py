@@ -129,12 +129,42 @@ def normalize(text: str) -> str:
     """
     if not text:
         return ""
-    return "".join(
-        token.base + (f"【{token.reading}】" if token.annotated else "")
-        if token.annotated
-        else _BRACKET_RE.sub("", token.base)
-        for token in parse(text)
-    )
+    out = ""
+    for token in parse(text):
+        if token.annotated:
+            out += f"{token.base}【{_trim_repeated_kana(out, token.reading)}】"
+        else:
+            out += _BRACKET_RE.sub("", token.base)
+    return out
+
+
+_TRAILING_KANA_RE = re.compile(r"[ぁ-ゖァ-ヺー]+$")
+
+
+def _trim_repeated_kana(before: str, reading: str) -> str:
+    """Drop kana a reading repeats from just before its kanji.
+
+    A reading covers its kanji only. ``やり方【やりかた】`` put やりかた over 方:
+    the ruby showed やり twice and speech said やりやりかた. Two or more kana,
+    or the お/ご prefix, are trimmed; a one-kana overlap is usually chance, and
+    a reading is never trimmed to nothing.
+
+    >>> _trim_repeated_kana("標準のやり", "やりかた")
+    'かた'
+    >>> _trim_repeated_kana("お", "おちゃ")
+    'ちゃ'
+    >>> _trim_repeated_kana("ここ", "こども")
+    'こども'
+    >>> _trim_repeated_kana("あ", "あ")
+    'あ'
+    """
+    match = _TRAILING_KANA_RE.search(before)
+    kana = match.group(0) if match else ""
+    for k in range(min(len(kana), len(reading) - 1), 0, -1):
+        lead = kana[-k:]
+        if (k >= 2 or lead in ("お", "ご")) and reading.startswith(lead):
+            return reading[k:]
+    return reading
 
 
 def to_ruby(text: str) -> str:

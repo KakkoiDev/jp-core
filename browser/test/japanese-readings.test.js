@@ -96,3 +96,11 @@ test('kuru compounds retain their prefix and inflect as one dictionary word',()=
  assert.equal(resolve('やって来【らい】た').text,'やって来【き】た');
  assert.equal(resolve('やって来【らい】ない').text,'やって来【こ】ない');
 });
+
+test("い-adjective and ichidan stems take すぎる, そう and さ: 多すぎる is おお, never the prefix 多 (た)",()=>{
+ const resolve=createReadingResolver([{w:"多",r:"た",pos:["n","pref"]},{w:"多い",r:"おおい",pos:["adj-i"]},{w:"高い",r:"たかい",pos:["adj-i"]},{w:"食べる",r:"たべる",pos:["v1","vt"]},{w:"項目",r:"こうもく"}]);
+ assert.equal(resolve("項目が多すぎます。").text,"項目【こうもく】が多【おお】すぎます。");
+ assert.equal(resolve("高そうだ").text,"高【たか】そうだ");
+ assert.equal(resolve("高さ").text,"高【たか】さ");
+ assert.equal(resolve("食べすぎた").text,"食【た】べすぎた");
+});
