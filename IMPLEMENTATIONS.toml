@@ -86,9 +86,9 @@ status = "consumer"
 capabilities = ["japanese-learning-application", "chat-integration", "deepseek-translation", "browser-tts", "speech-input", "furigana", "reading-alignment", "dictionary-readings", "conjugated-verb-readings", "irregular-verb-readings", "conjugated-adjective-readings", "browser-speech-pronunciation-hints", "furigana-audio-alignment", "offline-pwa", "history", "anki-deck-generation", "fsrs-review", "answer-diff", "sentence-content-replacement", "japanese-word-matching", "grammar-evidence-spans", "content-deduplicated-imports", "starter-catalogues"]
 description = "Offline-first English-to-Japanese shadowing PWA using JP Core's browser sentence, furigana, and backup primitives. Its review asks in English and diffs the Japanese the learner says back, so it reads the furigana notation through core.js rather than reimplementing it."
 look_here = ["core.js", "japanese-readings.js", "japanese-words.js", "grammar-spans.js", "words.js", "diff.js", "app.js", "speech.js", "db.js", "sw.js", "srs.js", "review-modes.js", "anki-schedule.js"]
-jp_core = "git:78a5fa3661292be083b07775e9c3d0e59e4f75e0"
+jp_core = "git:ab3544d3072ff8967351f7de75418870ee963a6b"
 integration_paths = ["core.js", "japanese-readings.js", "japanese-words.js", "grammar-spans.js", "README.md"]
-verified_revision = "78a5fa3661292be083b07775e9c3d0e59e4f75e0"
+verified_revision = "ab3544d3072ff8967351f7de75418870ee963a6b"
 planned_capabilities = ["browser-spaced-repetition-review"]
 planned_notes = "Migration source for browser/review.js: srs.js (bundled ts-fsrs 5.4.2), review-modes.js and anki-schedule.js. Echo switches to a copy of review.js with no change to stored srs/reviewTrack state, then drops its own copies."
 
