@@ -111,3 +111,24 @@ test("何 is なに or なん by what follows it, and a wrong saved reading is c
  assert.equal(resolve("何を").text,"何【なに】を");assert.equal(resolve("何か").text,"何【なに】か");
  assert.equal(resolve("何ですか").text,"何【なん】ですか");assert.equal(resolve("何の").text,"何【なん】の");
 });
+
+test('common compounds missing from the compact dictionary repair saved ruby as a unit',()=>{
+ const resolve=createReadingResolver([
+  {w:'見積もり',r:'みつもり'},{w:'書く',r:'かく',pos:['v5k']},
+  {w:'認知',r:'にんち'},{w:'負荷',r:'ふか'},
+  {w:'読む',r:'よむ',pos:['v5m']},{w:'本日',r:'ほんじつ'},
+  {w:'用語',r:'ようご'},{w:'残る',r:'のこる',pos:['v5r']},
+ ]);
+ for(const [stored,expected] of [
+  ['見積【みつ】を書【か】いた。','見積【みつもり】を書【か】いた。'],
+  ['見積【みつ】もりを書【か】いた。','見積【みつ】もりを書【か】いた。'],
+  ['認知【にんち】的な過負荷【ふか】。','認知的【にんちてき】な過負荷【かふか】。'],
+  ['本日着任しました。','本日【ほんじつ】着任【ちゃくにん】しました。'],
+  ['既読【よ】つけといて。','既読【きどく】つけといて。'],
+  ['用語の誤用が残っています。','用語【ようご】の誤用【ごよう】が残【のこ】っています。'],
+ ]){
+  assert.deepEqual(resolve(stored),{text:expected,issues:[]});
+  validateReadingCorrection(stored,expected);
+  assert.deepEqual(resolve(expected),{text:expected,issues:[]});
+ }
+});
