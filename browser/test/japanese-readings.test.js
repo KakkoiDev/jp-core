@@ -132,3 +132,14 @@ test('common compounds missing from the compact dictionary repair saved ruby as 
   assert.deepEqual(resolve(expected),{text:expected,issues:[]});
  }
 });
+
+test('a word goes to the voice with its reading, so a device voice never guesses',async()=>{
+ const {speechText,spokenWord,withReading}=await import('../japanese-readings.js');
+ // 重役 read bare by a device voice comes out おもやく.
+ assert.equal(spokenWord('重役','じゅうやく'),'重役【じゅうやく】');
+ assert.equal(speechText(spokenWord('重役','じゅうやく')),'ジュウヤク');
+ assert.equal(spokenWord('ほぼ','ほぼ'),'ほぼ','kana needs no hint');
+ assert.equal(withReading('重役が会議に出た。','重役','じゅうやく'),'重役【じゅうやく】が会議に出た。');
+ assert.equal(withReading('重役【じゅうやく】が来た。','重役','じゅうやく'),'重役【じゅうやく】が来た。');
+ assert.equal(withReading('社長が来た。','重役','じゅうやく'),'社長が来た。');
+});
