@@ -94,7 +94,14 @@ in that file are historical fact — record them, never renumber them.
 ```bash
 uv sync
 uv run pytest
+node --test browser/test/*.test.js
 ```
+
+Every public feature has Given/When/Then scenarios in [SCENARIOS.md](SCENARIOS.md), each with one end-to-end test
+named after its title: pytest for the Python API, `node --test` for the browser distribution and Playwright for the
+furigana page (`tests/e2e/`). The vendored [test-core tools](tools/test-core/README.md) check that every scenario
+has its test and that it ran and passed, that every control on the e2e pages is used by a step, and that no test
+waits on time. A new feature gets its scenario and test in the same change; removing one removes both.
 
 The furigana tests are golden-file tests captured from the two original
 implementations. They exist so that extraction cannot silently change how

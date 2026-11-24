@@ -1,0 +1,29 @@
+name: Check
+on: [push, pull_request]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Python dependencies from uv.lock
+        run: uv sync --frozen --all-extras
+      - name: Python tests and scenarios (JUnit report)
+        run: uv run --frozen pytest --junitxml=.test-output/pytest-junit.xml
+      - name: Browser distribution tests and scenarios (JUnit report)
+        run: node --test --test-reporter=spec --test-reporter-destination=stdout --test-reporter=junit --test-reporter-destination=.test-output/node-junit.xml browser/test/*.test.js
+      - name: Playwright, pinned in tests/e2e
+        run: |
+          npm ci --prefix tests/e2e --ignore-scripts
+          tests/e2e/node_modules/.bin/playwright install --with-deps chromium
+      - name: Furigana page in Chromium (JUnit report)
+        run: NODE_PATH="$PWD/tests/e2e/node_modules" node --test --test-reporter=spec --test-reporter-destination=stdout --test-reporter=junit --test-reporter-destination=.test-output/e2e-junit.xml tests/e2e/furigana.e2e.mjs
+      - name: Testing protocol (vendored test-core tools)
+        if: always()
+        run: |
+          python3 tools/test-core/flaky_lint.py tests browser/test tests/e2e/furigana.e2e.mjs
+          python3 tools/test-core/e2e_coverage.py --pages tests/e2e/pages/*.html --tests tests/e2e/furigana.e2e.mjs
+          python3 tools/test-core/scenarios.py check SCENARIOS.md --tests tests/test_scenarios.py browser/test/scenarios.test.js tests/e2e/furigana.e2e.mjs --junit .test-output/pytest-junit.xml .test-output/node-junit.xml .test-output/e2e-junit.xml
