@@ -143,3 +143,17 @@ test('a word goes to the voice with its reading, so a device voice never guesses
  assert.equal(withReading('重役【じゅうやく】が来た。','重役','じゅうやく'),'重役【じゅうやく】が来た。');
  assert.equal(withReading('社長が来た。','重役','じゅうやく'),'社長が来た。');
 });
+
+test('a word with kana in it spreads its reading over its kanji',async()=>{
+ const {speechText,spokenWord,spreadReading}=await import('../japanese-readings.js');
+ // A reading binds only to the kanji right before its bracket: whole, 生け花【いけばな】
+ // was spoken 生け・イケバナ, and 間もなく【まもなく】 lost its reading (JP Echo reports, 26 Nov 2026).
+ assert.equal(spokenWord('生け花','いけばな'),'生【い】け花【ばな】');
+ assert.equal(speechText(spokenWord('生け花','いけばな')),'イけバナ');
+ assert.equal(speechText(spokenWord('間もなく','まもなく')),'マもなく');
+ assert.equal(speechText(spokenWord('引き出す','ひきだす')),'ヒきダす');
+ assert.equal(spokenWord('女～','じょ～'),'女【じょ】～','a mark stays in place');
+ assert.equal(spokenWord('～過ぎる','～すぎる'),'～過【す】ぎる');
+ assert.equal(spreadReading('重役','じゅうやく'),null,'a pure kanji word keeps its whole reading');
+ assert.equal(spokenWord('生け花','はな'),'生け花【はな】','what does not line up keeps the whole reading');
+});
